@@ -6,14 +6,28 @@ import Quiz from "../Quiz"
 const Welcome = props => {
     const firebase = useContext(FirebaseContext);
     const [userSession, setUserSession] = useState(null);
+    const [userData, setUserData] = useState({});
     useEffect(() => {
         const sessionListener = firebase.auth.onAuthStateChanged(user => {
             user ? setUserSession(user) : props.history.push("/");
         });
+        if (userSession) {
+            firebase.user(userSession.uid)
+                .get()
+                .then(doc => {
+                    if (doc && doc.exists) {
+                        const data = doc.data();
+                        setUserData(data);
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
         return () => {
             sessionListener();
-        }
-    }, []);
+        };
+    }, [userSession]);
 
     return userSession === null ? (
         <>
@@ -24,7 +38,7 @@ const Welcome = props => {
         <div className="quiz-bg">
             <div className="container">
                 <Logout />
-                <Quiz />
+                <Quiz userData={userData} />
             </div>
         </div>
     )
