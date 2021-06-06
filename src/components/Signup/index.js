@@ -21,7 +21,13 @@ const Signup = (props) => {
         e.preventDefault();
         const {pseudo, email, password} = loginData;
         firebase.signupUser(email,password)
-        .then( user => {
+        .then( authUser => {
+            return firebase.user(authUser.user.uid).set({
+                    pseudo, 
+                    email
+                });
+        })
+        .then( () => {
             setLoginData({...data});
             props.history.push("/welcome");
         })
