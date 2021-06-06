@@ -59,7 +59,8 @@ const Login = (props) => {
                             {btn ? <button>Connexion</button> : <button disabled>Connexion</button>}
                         </form>
                         <div className="linkContainer">
-                            <Link to="/signup" className="simpleLink">Nouveau sur Marvel Quiz ? Inscrivez-vous maintenant</Link>
+                            <Link to="/signup" className="simpleLink">Nouveau sur Marvel Quiz ? Inscrivez-vous maintenant</Link><br/>
+                            <Link to="/forgetpassword" className="simpleLink">Mot de passe oublié ? Récupérer-le ici.</Link>
                         </div>
                     </div>
                 </div>
