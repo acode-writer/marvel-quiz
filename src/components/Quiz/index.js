@@ -1,7 +1,12 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
+import { toast } from 'react-toastify';
 import Levels from "../Levels";
 import ProgressBar from "../ProgressBar";
 import { QuizMarvel } from "../QuizMarvel";
+import 'react-toastify/dist/ReactToastify.min.css';
+
+toast.configure();
+
 export default class Quiz extends Component {
     state = {
         levelNames: ["debutant", "confirme", "expert"],
@@ -13,7 +18,8 @@ export default class Quiz extends Component {
         idQuestion: 0,
         isBtnDisabled: true,
         userAnswer: null,
-        score: 0
+        score: 0,
+        isWelcomeMsgShown: false
     };
 
     storedDataRef = React.createRef();
@@ -30,8 +36,26 @@ export default class Quiz extends Component {
                 idQuestion: this.state.idQuestion + 1
             });
         }
-        
+
     };
+
+    showWelcomeMsg = pseudo => {
+        if (!this.state.isWelcomeMsgShown) {
+            toast.warn(`Bienvenue ${pseudo} et bonne chance!`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            this.setState({
+                ...this.state,
+                isWelcomeMsgShown: true
+            })
+        }
+    }
 
     componentDidMount() {
         this.loadQuestion(this.state.levelNames[this.state.quizLevel]);
@@ -55,6 +79,11 @@ export default class Quiz extends Component {
                 userAnswer: null,
             });
         }
+
+        if (this.props.userData.pseudo) {
+            this.showWelcomeMsg(this.props.userData.pseudo);
+        }
+
     }
     onSubmitAnwser = selectedAnswer => {
         this.setState({
@@ -80,6 +109,25 @@ export default class Quiz extends Component {
                 ...prevState,
                 score: prevState.score + 1
             }));
+            toast.success(`Bravo +1`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
+            toast.error(`Raté 0`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     }
     render() {
