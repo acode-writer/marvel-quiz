@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 const Landing = () => {
     const [btn, setBtn] = useState(false);
@@ -28,14 +28,14 @@ const Landing = () => {
     }; 
 
     const displayBtn = btn && (
-        <>
+        <Fragment>
             <div className="leftBox">
                 <Link to="/signup" className="btn-welcome" onMouseOver={onSetLeftImg} onMouseOut={onClearImg}>Inscription</Link>
             </div>
             <div className="rightBox">
                 <Link to="/login" className="btn-welcome" onMouseOver={onSetRightImg} onMouseOut={onClearImg}>Connexion</Link>
             </div>
-        </>
+        </Fragment>
     );
     return (
         <main className="welcomePage" ref={refWolverine}>

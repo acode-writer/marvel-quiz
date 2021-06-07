@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import batman from "../../images/batman.png";
 
 const centerH2 = {

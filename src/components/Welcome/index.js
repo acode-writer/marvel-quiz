@@ -1,4 +1,5 @@
-import { useContext, useState, useEffect } from "react";
+import React from 'react';
+import { useContext, useState, useEffect, Fragment } from "react";
 import { FirebaseContext } from "../firebase";
 import Logout from "../Logout"
 import Quiz from "../Quiz"
@@ -13,6 +14,7 @@ const Welcome = props => {
         });
         if (userSession) {
             firebase.user(userSession.uid)
+
                 .get()
                 .then(doc => {
                     if (doc && doc.exists) {
@@ -30,10 +32,10 @@ const Welcome = props => {
     }, [userSession]);
 
     return userSession === null ? (
-        <>
+        <Fragment>
             <div className="loader"></div>
             <p className="loaderText">Loading ...</p>
-        </>
+        </Fragment>
     ) : (
         <div className="quiz-bg">
             <div className="container">

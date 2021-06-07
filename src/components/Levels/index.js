@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Levels = () => {
     return (
         <div className="levelsContainer">
